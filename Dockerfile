@@ -1,22 +1,34 @@
+# Use an official Golang image as a builder stage
+FROM golang:1.18 AS builder
+
+# Set the working directory for building
+WORKDIR /app
+
+# Download and build geoipupdate
+RUN go install github.com/maxmind/geoipupdate/v6/cmd/geoipupdate@latest
+
 # Use an official Python runtime as a parent image
-FROM python:3.11.0
+FROM python:3.11.0-slim-buster
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy the current directory contents into the container at /usr/src/app
+# Copy the application code and requirements.txt into the container
 COPY . .
 
-# Install any needed packages specified in requirements.txt
-COPY requirements.txt ./
+# Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install geoipupdate
-RUN apt update && apt install -y geoipupdate
+# Copy the geoipupdate binary from the builder stage
+COPY --from=builder /go/bin/geoipupdate /usr/local/bin/geoipupdate
 
-# Define environment variables for MaxMind AccountID and LicenseKey
-ENV MAXMIND_ACCOUNT_ID=YourMaxMindAccountIDHere
-ENV MAXMIND_LICENSE_KEY=YourMaxMindLicenseKeyHere
+# Use build arguments for MaxMind AccountID and LicenseKey
+ARG MAXMIND_ACCOUNT_ID=YourMaxMindAccountIDHere
+ARG MAXMIND_LICENSE_KEY=YourMaxMindLicenseKeyHere
+
+# Set environment variables with build arguments as defaults
+ENV MAXMIND_ACCOUNT_ID=${MAXMIND_ACCOUNT_ID}
+ENV MAXMIND_LICENSE_KEY=${MAXMIND_LICENSE_KEY}
 
 # Create GeoIP.conf file using environment variables
 RUN echo "AccountID ${MAXMIND_ACCOUNT_ID}\nLicenseKey ${MAXMIND_LICENSE_KEY}\nEditionIDs GeoLite2-City GeoLite2-Country" > /usr/src/app/GeoIP.conf

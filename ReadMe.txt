@@ -4,12 +4,17 @@ It is a python script that uses the geolocation databese from MaxMind, and give 
 It also includes ANS and Country locations, as well a host name resolution.
 
 
-docker build --build-arg MAXMIND_ACCOUNT_ID=123456 --build-arg MAXMIND_LICENSE_KEY=abcdef123456 -t geolocator-app .
+docker build \
+  --build-arg MAXMIND_ACCOUNT_ID=YourMaxMindAccountIDHere \
+  --build-arg MAXMIND_LICENSE_KEY=YourMaxMindLicenseKeyHere \
+  -t geolocator-app .
+
+
 
 You are able to input your account ID and your key when building the container for the first time.
 
-docker run -p 4000:80 geolocator-app
-after a successful build.
+docker run -e MAXMIND_ACCOUNT_ID=YourMaxMindAccountIDHere \
+           -e MAXMIND_LICENSE_KEY=YourMaxMindLicenseKeyHere \
+           -p 80:80 geolocator-app
 
-You may need to change the python version in the docker file to what you are running on your host machine.
 
