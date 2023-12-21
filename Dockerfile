@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.8-slim
+FROM python:3.11.0
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -12,7 +12,7 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install geoipupdate
-RUN apt-get update && apt-get install -y geoipupdate
+RUN apt update && apt install -y geoipupdate
 
 # Define environment variables for MaxMind AccountID and LicenseKey
 ENV MAXMIND_ACCOUNT_ID=YourMaxMindAccountIDHere
