@@ -5,9 +5,9 @@ import socket
 import pyproj
 
 # Database paths
-city_db_path = '/var/lib/GeoIP/GeoLite2-City.mmdb'
-country_db_path = '/var/lib/GeoIP/GeoLite2-Country.mmdb'
-asn_db_path = '/var/lib/GeoIP/GeoLite2-ASN.mmdb'
+city_db_path = '/usr/share/GeoIP/GeoLite2-City.mmdb'
+country_db_path = '/usr/share/GeoIP/GeoLite2-Country.mmdb'
+asn_db_path = '/usr/share/GeoIP/GeoLite2-ASN.mmdb'
 
 # Function for LatLong to UTM
 def latlong_to_utm(latitude, longitude):
