@@ -1,6 +1,6 @@
 this docker container is intended to be used with a maxmind account
 
-It is a python script that uses the geolocation databese from MaxMind, and give output choices in latlong or UTM for city location
+It is a python script that uses the geolocation database from MaxMind, and gives output choices in latlong or UTM for city location
 It also includes ANS and Country locations, as well a host name resolution.
 
 
