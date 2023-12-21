@@ -15,6 +15,11 @@ You are able to input your account ID and your key when building the container f
 
 docker run -e MAXMIND_ACCOUNT_ID=YourMaxMindAccountIDHere \
            -e MAXMIND_LICENSE_KEY=YourMaxMindLicenseKeyHere \
-           -p 80:80 geolocator-app
+           -p 80:80 -it geolocator-app /bin/bash
+
+
+After you're in the shell, just run the script with python geo.py
+
+
 
 
